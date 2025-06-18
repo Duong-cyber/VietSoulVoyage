@@ -1,0 +1,71 @@
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #4C1D0C; /* Màu nâu đậm */
+      margin: 0;
+      padding: 0;
+      color: #fff;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: #fff;
+      color: #333;
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .logo img {
+      max-width: 160px;
+    }
+    h2 {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      color: #4C1D0C;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .checkbox {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .checkbox input {
+      margin-right: 10px;
+    }
+    .btn {
+      width: 100%;
+      background-color: #b87333; /* Màu vàng đồng */
+      color: #fff;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 25px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #a7612c;
+    }
+.person img {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #444;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}

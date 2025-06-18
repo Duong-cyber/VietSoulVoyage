@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cẩm nang du lịch - VietSoul Voyage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f6f3;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #b76e28;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #3a150a;
+      margin-bottom: 20px;
+    }
+
+    .blog-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .blog-item {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .blog-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .blog-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .blog-content {
+      padding: 15px;
+    }
+
+    .blog-content h3 {
+      color: #b76e28;
+      margin-top: 0;
+    }
+
+    .blog-content p {
+      color: #555;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    footer {
+      background-color: #3a150a;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+    }
+    header {
+  background-color: #3a150a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  color: #e1a64b;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo span {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+nav a {
+  color: #e1a64b;
+  margin-left: 20px;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+nav a:hover {
+  color: #f0c674;
+}
+
+  </style>
+</head>
+<body>
+  <body>
+  <header>
+    <div class="logo">
+      <img src="images/logo.jpg" alt="Logo" />
+      <span id="siteName">VietSoul Voyage</span>
+    </div>
+    <nav>
+      <a href="VietSoulVoyage.html" id="navHome">Trang chủ</a>
+      <a href="dangnhap.html" id="navLogin">Đăng nhập</a>
+    </nav>
+  </header>
+    <h1 style="text-align: center;">Cẩm nang du lịch</h1>
+    <p style="text-align: center;">Những chia sẻ hữu ích cho hành trình của bạn</p>
+  <div class="container">
+    <h2>Bài viết nổi bật</h2>
+    <div class="blog-list">
+      <div class="blog-item">
+        <img src="images/meochuanbido.jpg" alt="Mẹo chuẩn bị hành lý">
+        <div class="blog-content">
+          <h3>Mẹo chuẩn bị hành lý khi đi du lịch</h3>
+          <p>Đừng để hành lý làm bạn mệt mỏi! Hướng dẫn cách chuẩn bị đồ dùng thiết yếu, gọn nhẹ và tiện lợi cho mọi hành trình.</p>
+        </div>
+      </div>
+
+      <div class="blog-item">
+        <img src="images/diadiemcheckin.jpg" alt="Địa điểm check-in hot">
+        <div class="blog-content">
+          <h3>Top địa điểm check-in hot tại Việt Nam</h3>
+          <p>Khám phá những điểm sống ảo "triệu like" từ Bắc vào Nam – nơi bạn nhất định phải ghé thăm ít nhất một lần trong đời!</p>
+        </div>
+      </div>
+
+      <div class="blog-item">
+        <img src="images/amthuc.jpg" alt="Ẩm thực địa phương">
+        <div class="blog-content">
+          <h3>Ẩm thực vùng miền - Ăn gì khi du lịch?</h3>
+          <p>Tổng hợp món ngon không thể bỏ lỡ khi đến mỗi vùng đất Việt – từ bánh căn Nha Trang đến bún bò Huế trứ danh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer><p><span>Fanpage:</span> VietSoul Voyage</p>
+          <p><span>Email:</span> vietsoulvoyage@gmail.com</p>
+          <p><span>Phone:</span> +84 388883467</p>
+  </footer>
+
+</body>
+</html>

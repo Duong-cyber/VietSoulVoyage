@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Giỏ hàng - VietSoul Voyage</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #f8f6f3;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      background: #fff;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #b76e28;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    .tour-image {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    strong {
+      color: #3a150a;
+    }
+
+    .empty {
+      text-align: center;
+      font-style: italic;
+      color: #888;
+      margin-top: 40px;
+    }
+
+    .btn-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .btn {
+      background-color: #b76e28;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #a25d1e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Thông tin đặt tour</h1>
+    <div id="thongtin"></div>
+
+    <div class="btn-container">
+      <a href="VietSoulVoyage.html" class="btn">Trang chủ</a>
+    </div>
+  </div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem("bookingData"));
+
+    const tourImages = {
+      "Tour Đà Lạt 3N2Đ": "dalat.jpg",
+      "Tour Phú Quốc 4N3Đ": "phuquoc.jpg",
+      "Tour Sapa 3N2Đ": "/sapa.jpg",
+      "Tour Đà Nẵng 3N2Đ": "danang.jpg",
+      "Tour Huế - Hội An 4N3Đ": "hoian.jpg",
+      "Tour Cần Thơ - Châu Đốc 3N2Đ": "chaudoc.jpg",
+      "Tour Ninh Bình 2N1Đ": "trangan.jpg",
+      "Tour Buôn Ma Thuột 3N2Đ": "buonmathuot.jpg",
+      "Tour Quy Nhơn 3N2Đ": "quynhon.jpg",
+      "Tour Mộc Châu 2N1Đ": "mocchau.jpg",
+      "Tour TP.HCM - Vũng Tàu 2N1Đ": "vungtau.jpg"
+    };
+
+    const infoDiv = document.getElementById("thongtin");
+
+    if (data) {
+      const imageFile = tourImages[data.tour] || "default.jpg";
+      infoDiv.innerHTML = `
+        <img src="images/${imageFile}" alt="Ảnh tour" class="tour-image" />
+        <p><strong>Tour:</strong> ${data.tour}</p>
+        <p><strong>Họ tên:</strong> ${data.name}</p>
+        <p><strong>Số điện thoại:</strong> ${data.phone}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Ngày khởi hành:</strong> ${data.date}</p>
+        <p><strong>Số người:</strong> ${data.people}</p>
+      `;
+    } else {
+      infoDiv.innerHTML = `<p class="empty">Không có dữ liệu đặt tour nào được tìm thấy.</p>`;
+    }
+  </script>
+</body>
+</html>

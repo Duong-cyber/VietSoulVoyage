@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liên hệ - VietSoul Voyage</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #3a150a;
+      color: #e1a64b;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      background: white;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #3a150a;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      background-color: #3a150a;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3a150a;
+    }
+
+    .success-message {
+      background: #e6ffed;
+      color: #2e7d32;
+      border: 1px solid #a5d6a7;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+
+    footer {
+      background-color: #3a150a;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Liên hệ với chúng tôi</h1>
+    <p>Chúng tôi luôn sẵn sàng hỗ trợ bạn!</p>
+  </header>
+
+  <div class="container">
+    <h2>Gửi tin nhắn</h2>
+    <form id="contactForm">
+      <label for="name">Họ và tên:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="subject">Tiêu đề:</label>
+      <input type="text" id="subject" name="subject" required />
+
+      <label for="message">Nội dung:</label>
+      <textarea id="message" name="message" required></textarea>
+
+      <button type="submit">Gửi liên hệ</button>
+    </form>
+
+    <div id="successMessage" class="success-message" style="display: none;">
+      ✅ Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.
+    </div>
+  </div>
+
+  <footer><p><span>Fanpage:</span> VietSoul Voyage</p>
+          <p><span>Email:</span> vietsoulvoyage@gmail.com</p>
+          <p><span>Phone:</span> +84 388883467</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Simulate sending data
+      setTimeout(() => {
+        successMessage.style.display = 'block';
+        form.reset();
+      }, 500);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VietSoul Voyage</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    :root {
+      --bg-color: #4b1e0d;
+      --text-color: #e1a64b;
+      --header-bg: #3a150a;
+      --card-bg: white;
+      --card-text: #333;
+      --cta-bg: #d19753;
+      --cta-hover: #b87d38;
+      --footer-bg: #3a150a;
+      --footer-text: #ccc;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #ffffff;
+      --text-color: #222;
+      --header-bg: #f3f3f3;
+      --card-bg: #f9f9f9;
+      --card-text: #000;
+      --cta-bg: #d19753;
+      --cta-hover: #b87d38;
+      --footer-bg: #eee;
+      --footer-text: #333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    header {
+      background-color: var(--header-bg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .logo span {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    nav a, .toggle-theme-btn {
+      color: var(--text-color);
+      margin-left: 20px;
+      text-decoration: none;
+      font-size: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      color: #f0c674;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px 30px;
+    }
+
+    .slider-container {
+      position: relative;
+      max-width: 800px;
+      margin: 40px auto;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .slide {
+      display: none;
+      text-align: center;
+    }
+
+    .slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      cursor: pointer;
+      transform: translateY(-50%);
+      font-size: 24px;
+      border-radius: 50%;
+      z-index: 10;
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    @keyframes slide {
+      0% { transform: translateX(0); }
+      12.5% { transform: translateX(-100%); }
+      25% { transform: translateX(-200%); }
+      37.5% { transform: translateX(-300%); }
+      50% { transform: translateX(-400%); }
+      62.5% { transform: translateX(-500%); }
+      75% { transform: translateX(-600%); }
+      87.5% { transform: translateX(-700%); }
+      100% { transform: translateX(0); }
+    }
+
+    .cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 0 20px 40px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      color: var(--card-text);
+      width: 250px;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: var(--cta-bg);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      text-decoration: none;
+      margin-top: 30px;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      background-color: var(--cta-hover);
+    }
+
+    .lang-container {
+      text-align: center;
+      margin: 30px 0 20px;
+    }
+
+    #map {
+      height: 300px;
+      width: 60%;
+      margin: 30px auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: var(--footer-text);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* --- Popup Styles --- */
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease;
+    }
+
+    .popup-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .popup {
+      width: 90%;
+      max-width: 600px;
+      background: var(--card-bg);
+      color: var(--card-text);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .popup-overlay.show .popup {
+      transform: scale(1);
+    }
+
+    .popup .close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 22px;
+      color: #999;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+    }
+
+    .popup .content {
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .popup h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: var(--cta-bg);
+    }
+
+    .popup strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .popup p {
+      font-size: 15px;
+      margin-bottom: 20px;
+      color: var(--card-text);
+    }
+
+    .popup input[type="email"] {
+      width: 90%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .popup button {
+      background-color: var(--cta-bg);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .popup button:hover {
+      background-color: var(--cta-hover);
+    }
+
+    .popup .message {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .popup .message.success { color: green; }
+    .popup .message.error { color: red; }
+
+    .popup a {
+      display: block;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #888;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="images/logo.jpg" alt="Logo" />
+    <span id="siteName">VietSoul Voyage</span>
+  </div>
+  <nav>
+  <a href="VietSoulVoyage.html" id="navHome">Trang chủ</a>
+  <a href="sanpham.html" id="navProducts">Sản phẩm</a>
+  <a href="aboutus.html" id="navAbout">Giới thiệu</a>
+  <a href="privacy.html" id="navPrivacy">Chính sách bảo mật</a>
+  <a href="faq.html" id="navTerms">Điều khoản sử dụng</a>
+  <a href="blog.html" id="navBlog">Cẩm nang du lịch</a>
+  <a href="support.html" id="navSupport">Hỗ trợ & FAQ</a>
+  <a href="dangnhap.html" id="navLogin">Đăng nhập</a>
+
+  <button class="toggle-theme-btn" onclick="toggleTheme()">🌓</button>
+</nav>
+</header>
+
+<section class="hero">
+  <h1>Khám phá Việt Nam qua lăng kính linh hồn</h1>
+
+  <section class="slider-container">
+    <div class="slide active">
+      <img src="images/cauvang.jpg" alt="Ảnh 1">
+    </div>
+    <div class="slide">
+      <img src="images/chaudoc.jpg" alt="Ảnh 2">
+    </div>
+    <div class="slide">
+      <img src="images/dalat.jpg" alt="Ảnh 3">
+    </div>
+    <div class="slide">
+      <img src="images/danang.jpg" alt="Ảnh 4">
+    </div>
+    <div class="slide">
+      <img src="images/hoian.jpg" alt="Ảnh 5">
+    </div>
+    <div class="slide">
+      <img src="images/mocchau.jpg" alt="Ảnh 6">
+    </div>
+
+    <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+    <button class="next" onclick="changeSlide(1)">&#10095;</button>
+  </section>
+
+  <div class="cards">
+    <div class="card">
+      <img src="images/vanhoadocdao.jpg" class="card-img" />
+      <h3>Văn hóa độc đáo</h3>
+      <p>Khám phá bản sắc dân tộc qua từng vùng miền.</p>
+    </div>
+    <div class="card">
+      <img src="images/thiennhienhungvi.jpg" class="card-img" />
+      <h3>Thiên nhiên kỳ vĩ</h3>
+      <p>Tận hưởng cảnh đẹp từ núi cao đến biển cả.</p>
+    </div>
+    <div class="card">
+      <img src="images/ketnoi.jpg" class="card-img" />
+      <h3>Hành trình kết nối</h3>
+      <p>Trải nghiệm ý nghĩa cùng người dân bản địa.</p>
+    </div>
+  </div>
+
+  <a href="dangky.html" class="cta-button">Đăng ký tham gia ngay</a>
+
+  <div class="lang-container">
+    <label for="langSwitch">Ngôn ngữ:</label>
+    <select id="langSwitch">
+      <option value="vi">Tiếng Việt</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+
+  <div id="map"></div>
+</section>
+
+<footer><p><span>Fanpage:</span> VietSoul Voyage</p>
+          <p><span>Email:</span> vietsoulvoyage@gmail.com</p>
+          <p><span>Phone:</span> +84 388883467</p>
+</footer>
+
+<!-- Popup -->
+<!-- Popup cải tiến -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+      <button class="close" onclick="closePopup()">×</button>
+      <div class="content">
+        <h2>VietSoul Voyage</h2>
+        <strong>🎉 GIẢM GIÁ NGAY 15%</strong>
+        <p>Hãy đăng ký ngay hôm nay để nhận ưu đãi độc quyền từ chúng tôi.</p>
+        <input type="email" id="emailInput" placeholder="Nhập địa chỉ email của bạn">
+        <button onclick="submitEmail()">Đăng ký ngay</button>
+        <div class="message" id="messageBox"></div>
+        <a onclick="closePopup()">Không, cảm ơn</a>
+      </div>
+    </div>
+  </div>
+
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  const map = L.map("map").setView([16.0471, 108.2062], 6);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+    L.marker([21.0285, 105.8542]).addTo(map).bindPopup("Hà Nội");
+    L.marker([10.7626, 106.6602]).addTo(map).bindPopup("TP.HCM");
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    html.dataset.theme = html.dataset.theme === "light" ? "dark" : "light";
+  }
+
+ function showPopup() {
+      const overlay = document.getElementById('popupOverlay');
+      overlay.classList.add('show');
+    }
+
+    function closePopup() {
+      const overlay = document.getElementById('popupOverlay');
+      overlay.classList.remove('show');
+      localStorage.setItem('popupClosed', 'true');
+      document.getElementById('messageBox').innerText = '';
+    }
+
+    function submitEmail() {
+      const email = document.getElementById('emailInput').value.trim();
+      const msgBox = document.getElementById('messageBox');
+      if (!email.includes('@') || !email.includes('.')) {
+        msgBox.innerText = "❌ Vui lòng nhập email hợp lệ!";
+        msgBox.className = "message error";
+      } else {
+        msgBox.innerText = "✅ Đăng ký thành công! Đang chuyển hướng...";
+        msgBox.className = "message success";
+        document.getElementById('emailInput').value = '';
+        setTimeout(() => window.location.href = "sanpham.html", 2000);
+      }
+    }
+
+    // Hiển thị popup sau 5 giây nếu chưa từng bị tắt
+    window.addEventListener('load', () => {
+    console.log("🚀 Popup hiện ngay để test giao diện");
+    showPopup();
+    });
+</script>
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      currentSlide = (index + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+
+    function changeSlide(direction) {
+      showSlide(currentSlide + direction);
+    }
+
+    // Khởi tạo slide đầu tiên
+    showSlide(currentSlide);
+  </script>
+  <script>
+    const translations = {
+        vi: {
+        siteName: "VietSoul Voyage",
+        navHome: "Trang chủ",
+        navProducts: "Sản phẩm",
+        navLogin: "Đăng nhập",
+        heroTitle: "Khám phá Việt Nam qua lăng kính linh hồn",
+        cta: "Đăng ký tham gia ngay",
+        popupTitle: "🎉 GIẢM GIÁ NGAY 15%",
+        popupContent: "Hãy đăng ký ngay hôm nay để nhận ưu đãi độc quyền từ chúng tôi.",
+        popupBtn: "x",
+        popupNoThanks: "Không, cảm ơn"
+        },
+        en: {
+        siteName: "VietSoul Voyage",
+        navHome: "Home",
+        navProducts: "Products",
+        navLogin: "Login",
+        heroTitle: "Explore Vietnam through a soulful lens",
+        cta: "Join Now",
+        popupTitle: "🎉 15% DISCOUNT NOW",
+        popupContent: "Sign up today to get our exclusive offer.",
+        popupBtn: "x",
+        popupNoThanks: "No, thanks"
+        }
+    };
+
+   function setLanguage(lang) {
+    const t = translations[lang] || translations.vi;
+    document.getElementById('siteName').textContent = t.siteName;
+    document.getElementById('navHome').textContent = t.navHome;
+    document.getElementById('navProducts').textContent = t.navProducts;
+    document.getElementById('navLogin').textContent = t.navLogin;
+    document.querySelector('.hero h1').textContent = t.heroTitle;
+    document.querySelector('.cta-button').textContent = t.cta;
+
+    // Popup
+    document.querySelector('.popup strong').textContent = t.popupTitle;
+    document.querySelector('.popup p').textContent = t.popupContent;
+    document.querySelector('.popup button').textContent = t.popupBtn;
+    document.querySelector('.popup a').textContent = t.popupNoThanks;
+
+    // Đặt lại select box
+    document.getElementById('langSwitch').value = lang;
+  }
+
+  // Phát hiện ngôn ngữ từ trình duyệt
+  function detectLanguage() {
+    const savedLang = localStorage.getItem('siteLang');
+    const browserLang = navigator.language.startsWith('en') ? 'en' : 'vi';
+    const lang = savedLang || browserLang;
+    setLanguage(lang);
+  }
+  // Gắn sự kiện khi thay đổi select box
+  document.getElementById('langSwitch').addEventListener('change', function () {
+    const selectedLang = this.value;
+    localStorage.setItem('siteLang', selectedLang);
+    setLanguage(selectedLang);
+  });
+
+  // Tự động khi tải
+  window.addEventListener('DOMContentLoaded', detectLanguage);
+</script>
+
+</body>
+</html>

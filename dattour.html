@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đặt Tour - VietSoul Voyage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f6f3;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #3a150a;
+      color: #e1a64b;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    nav a {
+      color: #e1a64b;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 30px 0;
+      color: #3a150a;
+    }
+
+    form {
+      background: white;
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: #b76e28;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #a25d1e;
+    }
+
+    footer {
+      background-color: #3a150a;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="images/logo.jpg" alt="Logo">
+      <span>VietSoul Voyage</span>
+    </div>
+    <nav>
+      <a href="index.html">Trang chủ</a>
+      <a href="sanpham.html">Sản phẩm</a>
+      <a href="dangnhap.html">Đăng nhập</a>
+    </nav>
+  </header>
+
+  <h1>Đặt Tour Du Lịch</h1>
+
+  <form id="bookingForm">
+    <label for="tour">Chọn tour:</label>
+    <select id="tour" name="tour" required>
+      <option value="">-- Chọn một tour --</option>
+      <option value="Tour Đà Lạt 3N2Đ">Đà Lạt 3N2Đ - Vườn hoa, Thung lũng tình yêu</option>
+      <option value="Tour Phú Quốc 4N3Đ">Phú Quốc 4N3Đ - Biển xanh, VinWonders</option>
+      <option value="Tour Sapa 3N2Đ">Sapa 3N2Đ - Núi Fansipan, bản Cát Cát</option>
+      <option value="Tour Đà Nẵng 3N2Đ">Đà Nẵng 3N2Đ - Bà Nà Hills, Cầu Vàng</option>
+      <option value="Tour Huế - Hội An 4N3Đ">Hội An 4N3Đ - Khám phá cố đô Huế và phố cổ Hội An quyến rũ.</option>
+      <option value="Tour Cần Thơ - Châu Đốc 3N2Đ">Cần Thơ - Châu Đốc 3N2Đ - Miền Tây sông nước, chợ nổi Cái Răng, rừng tràm Trà Sư.</option>
+      <option value="Tour Ninh Bình 2N1Đ">Ninh Bình 2N1Đ - CKhám phá Tràng An và cố đô Hoa Lư.</option>
+      <option value="Tour Buôn Ma Thuột 3N2Đ">Buôn Ma Thuột 3N2Đ - Trải nghiệm văn hoá Tây Nguyên, thác Dray Nur.</option>
+      <option value="Tour Quy Nhơn 3N2Đ">Quy Nhơn 3N2Đ - Khám phá Eo Gió, Kỳ Co, trải nghiệm ẩm thực miền Trung.</option>
+      <option value="Tour Mộc Châu 2N1Đ">Mộc Châu 2N1Đ - Đồi chè, thác Dải Yếm và bản làng vùng cao.</option>
+      <option value="Tour TP.HCM - Vũng Tàu 2N1Đ">TP.HCM - Vũng Tàu 2N1Đ - Thư giãn bên bãi biển, hải sản tươi ngon.</option>
+    </select>
+
+    <label for="name">Họ và tên:</label>
+    <input type="text" id="name" name="name" required />
+
+    <label for="phone">Số điện thoại:</label>
+    <input type="tel" id="phone" name="phone" required pattern="[0-9]{10,11}" />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required />
+
+    <label for="date">Ngày khởi hành:</label>
+    <input type="date" id="date" name="date" required />
+
+    <label for="people">Số người:</label>
+    <input type="number" id="people" name="people" min="1" value="1" required />
+
+    <button type="submit">Gửi yêu cầu đặt tour</button>
+  </form>
+  <footer><p><span>Fanpage:</span> VietSoul Voyage</p>
+          <p><span>Email:</span> vietsoulvoyage@gmail.com</p>
+          <p><span>Phone:</span> +84 388883467</p>
+  </footer>
+<script>
+  document.getElementById("bookingForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Ngăn form gửi đi theo cách mặc định
+
+    if (!confirm("Bạn có chắc chắn muốn gửi thông tin đặt tour?")) return;
+
+    const bookingData = {
+      tour: document.getElementById("tour").value,
+      name: document.getElementById("name").value,
+      phone: document.getElementById("phone").value,
+      email: document.getElementById("email").value,
+      date: document.getElementById("date").value,
+      people: document.getElementById("people").value
+    };
+
+    // Lưu vào localStorage
+    localStorage.setItem("bookingData", JSON.stringify(bookingData));
+
+    // Chuyển sang trang giỏ hàng
+    window.location.href = "giohang.html";
+  });
+</script>
+</body>
+</html>
